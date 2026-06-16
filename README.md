@@ -1,2 +1,2 @@
 # sim3g
-Grahpics for the third generation gravitational wave detectors
+Grahpics for the gravitational wave observations for third generation detectors
