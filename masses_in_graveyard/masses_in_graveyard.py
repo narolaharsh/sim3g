@@ -1,17 +1,3 @@
-"""
-Masses in the Stellar Graveyard
-Recreates the LIGO-Virgo-KAGRA visualization of GW merger component masses.
-
-Each event shows:
-  - Lower component mass (m2, circle)
-  - Higher component mass (m1, circle)
-  - Final remnant mass (mfinal, circle)
-  - Solid line connecting m2 → m1
-  - Dashed line connecting m1 → mfinal
-
-Events are sorted by total mass and arranged in an arch (lightest on edges,
-heaviest in center) to visually separate them.
-"""
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -286,8 +272,12 @@ ax.text(0.01, 4e-3, r"Harsh Narola \textbar{} Utrecht University \textbar{} Nikh
         transform=ax.transAxes, fontsize=7)
 
 plt.tight_layout(rect=[0, 0.03, 1, 1])
-plt.savefig("et_masses_in_graveyard.pdf", dpi=150, bbox_inches="tight",
+
+plt.savefig("et_masses_in_graveyard.pdf", bbox_inches="tight",
             facecolor=fig.get_facecolor())
+plt.savefig("et_masses_in_graveyard.png", dpi=500, bbox_inches="tight",
+            facecolor=fig.get_facecolor())
+#plt.show()
 #plt.show()
 
 
