@@ -43,7 +43,7 @@ MASS_SCALE = 5.0   # marker area = MASS_SCALE * mass  (area ∝ mass)
 
 def ms(mass):
     """Marker size (area in pt²) proportional to mass."""
-    return 2 * mass
+    return 3 * mass
 
 
 def half_circle_markers():
@@ -145,7 +145,7 @@ def main():
     ax.add_collection(LineCollection(segs, colors="white", linewidths=0.6, alpha=0.2, zorder=1))
 
     for i in range(n_all):
-        ax.annotate("", xy=(x_of[i], bbh_mfinal[i]), xytext=(x_of[i], bbh_mass1[i]),
+        ax.annotate("", xy=(x_of[i], bbh_mfinal[i]*0.9), xytext=(x_of[i], bbh_mass1[i]),
                     arrowprops=dict(arrowstyle="->", color="white", lw=0.5, alpha=0.5,
                                     shrinkA=0, shrinkB=0),
                     zorder=2)
