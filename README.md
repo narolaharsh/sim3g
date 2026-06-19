@@ -1,2 +1,7 @@
 # sim3g
-Grahpics for the gravitational wave observations for third generation detectors
+
+Graphics for the gravitational wave observations in the era of third generation detectors.
+
+Structure:
+
+- masses_in_graveyard: Plots and the *py script to produce the plot.
