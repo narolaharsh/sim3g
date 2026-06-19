@@ -239,11 +239,11 @@ def main():
             transform=ax.transAxes, ha="center", va="center")
     ax.text(0.66, 0.9, "  Neutron Stars", transform=ax.transAxes,
             color=NS_COLOR, fontsize=14, ha="center", va="center")
-    ax.text(0.99, 4e-3, "Inspired by ``LIGO-Virgo-KAGRA masses in the stellar graveyard''",
-            transform=ax.transAxes, color="white", fontsize=7, va="center", ha="right", alpha=0.6)
-    ax.text(0.01, 4e-3, r"Harsh Narola \textbar{} Utrecht University \textbar{} Nikhef",
+    ax.text(0.99, 2e-3, "Inspired by ``LIGO-Virgo-KAGRA masses in the stellar graveyard''",
+            transform=ax.transAxes, color="white", fontsize=10, va="center", ha="right", alpha=1)
+    ax.text(0.01, 2e-3, r"Harsh Narola \textbar{} Utrecht University \textbar{} Nikhef",
             color="white", alpha=1, va="center", ha="left",
-            transform=ax.transAxes, fontsize=7)
+            transform=ax.transAxes, fontsize=10)
 
     plt.tight_layout(rect=[0, 0.03, 1, 1])
     plt.savefig("et_masses_in_graveyard.pdf", bbox_inches="tight",
