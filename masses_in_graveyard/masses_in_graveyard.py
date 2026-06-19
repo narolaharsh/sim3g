@@ -4,36 +4,19 @@ import matplotlib.colors as mcolors
 import matplotlib.path as mpath
 from matplotlib.collections import LineCollection
 from scipy.stats import gaussian_kde
-import scienceplots
+import matplotlib.style as mstyle
 
+if not hasattr(mstyle, "core"):
+    mstyle.core = mstyle
+
+import scienceplots
 plt.style.use(['science'])
 
-# ─── LVK black hole masses (GWTC-1/2/3 BBH events) ───────────────────────────
-# Median component masses in solar masses — replace with your own catalog data
-LVK_BLACKHOLE_MASS1 = np.array([
-    # GWTC-1
-    35.6, 23.3, 13.7, 31.0, 10.9, 50.6, 35.2, 30.7, 35.5, 39.6,
-    # GWTC-2
-    24.6, 30.1, 34.8, 47.6, 40.0, 40.5, 46.2, 23.3, 36.0, 39.7,
-    37.5, 66.0, 95.3, 41.2, 32.5, 69.1, 57.1, 38.4, 54.0, 68.1,
-    11.6, 18.2, 36.4, 13.9, 37.7, 12.3, 41.6, 37.0, 32.1, 24.3,
-    35.5, 44.0, 35.9,  8.9, 20.4, 35.2,
-    # GWTC-3
-    10.1, 22.6, 38.1, 40.1, 19.3, 13.1,
-])
+# ─── LVK black hole masses (GWTC-4 BBH events) ───────────────────────────
 
-LVK_BLACKHOLE_MASS2 = np.array([
-    # GWTC-1
-    30.6, 13.6,  7.7, 20.1,  7.6, 34.3, 23.8, 25.3, 26.8, 29.4,
-    # GWTC-2
-    18.4,  8.3, 23.0, 28.4, 32.1, 32.2, 29.3, 12.6, 17.9, 26.5,
-    25.3, 40.5, 69.0, 32.6, 21.0, 47.8, 35.8, 29.3, 40.8, 40.2,
-     7.9, 12.0, 23.3,  8.2, 27.2,  8.1, 28.4, 27.0, 26.4, 11.2,
-    19.5, 32.6, 25.0,  5.0, 15.5, 21.5,
-    # GWTC-3
-     7.3, 14.5, 20.8, 31.1, 13.9,  7.8,
-])
+LVK_MASS1 = [11.54, 33.8, 38.1, 10.3, 44.0, 34.2, 33.76, 39.0, 37.5, 54.0, 45.8, 30.0, 12.4, 68.0, 42.4, 52.0, 55.7, 12.4, 40.0, 29.0, 47.0, 11.1, 29.9, 30.4, 63.8, 60.0, 42.0, 70.0, 11.3, 47.0, 19.3, 25.3, 16.4, 7.3, 42.4, 44.4, 10.9, 41.0, 19.5, 33.2, 12.7, 37.1, 36.6, 24.6, 37.3, 35.8, 25.5, 9.02, 46.0, 46.1, 11.5, 34.9, 37.1, 24.7, 38.3, 10.7, 11.6, 10.9, 10.9, 45.0, 39.8, 38.0, 24.4, 11.9, 13.2, 70.0, 40.3, 47.1, 34.4, 28.6, 11.1, 13.2, 18.6, 45.0, 41.6, 36.8, 65.0, 28.5, 34.0, 55.0, 10.6, 52.0, 33.0, 19.5, 14.1, 27.6, 52.0, 14.5, 31.1, 11.4, 65.0, 37.1, 46.8, 24.4, 12.6, 40.5, 31.3, 31.0, 38.6, 19.8, 52.0, 34.6, 38.8, 7.9, 28.7, 59.0, 42.3, 22.5, 53.0, 40.2, 9.3, 11.1, 11.9, 46.0, 47.0, 35.6, 37.6, 35.6, 45.0, 45.0, 137.0, 49.0, 12.9, 43.0, 20.0, 22.8, 11.6, 56.0, 39.8, 19.4, 23.2, 12.2, 61.0, 65.0, 94.0, 34.0, 12.0, 11.6, 20.6, 45.0, 28.8, 84.0, 64.0, 76.0, 34.5, 54.0, 21.7, 35.0, 28.8, 76.0, 39.3, 32.4, 27.3, 60.0, 33.9, 10.6, 42.0, 44.0, 53.0, 62.0, 70.0, 33.7, 69.0, 35.4, 51.0, 32.2, 44.0, 10.3, 12.3, 35.6, 16.6, 32.0, 45.0, 64.0, 29.1, 46.1, 16.3, 89.0, 32.6, 40.0, 10.0, 51.0, 32.5, 8.4, 27.1, 35.4, 48.0, 37.6, 17.4, 64.0, 3.66, 8.17, 38.0, 13.1, 34.2, 60.0, 28.3, 37.8, 19.3, 40.0, 38.9, 87.0, 37.5, 51.0, 24.1, 35.6, 51.0, 37.7, 10.1, 34.5, 42.2, 5.9, 35.6, 49.4, 45.1, 31.1, 12.1, 24.9, 11.7, 27.3, 10.7, 53.0, 12.1, 29.0, 65.0, 10.7, 11.8, 14.2, 66.3, 41.1, 20.8, 8.8, 9.7, 43.8, 32.6, 43.8, 23.7, 31.9, 23.3, 46.2, 37.7, 41.8, 12.5, 38.9, 11.8, 14.2, 36.6, 19.8, 12.1, 74.0, 54.1, 35.1, 58.0, 71.8, 35.6, 98.4, 65.1, 39.2, 40.9, 36.0, 23.2, 41.3, 105.5, 2.1, 42.0, 51.3, 33.7, 27.7, 24.8, 85.0, 38.3, 34.8, 1.46, 30.9, 34.1, 54.7, 10.6, 28.7, 14.2, 24.8, 34.6]
 
+LVK_MASS2 = [9.95, 26.7, 29.6, 6.9, 31.0, 21.3, 32.26, 30.2, 27.4, 36.0, 34.5, 21.1, 7.1, 49.0, 33.5, 33.0, 42.2, 8.1, 23.6, 21.4, 33.0, 6.5, 24.3, 23.0, 20.8, 47.0, 26.0, 24.0, 7.7, 25.0, 14.4, 20.5, 8.0, 5.14, 31.7, 31.0, 8.0, 19.3, 5.96, 25.5, 8.1, 26.8, 26.6, 20.3, 29.9, 21.9, 11.2, 6.99, 34.0, 34.9, 7.8, 9.8, 31.9, 13.4, 29.6, 7.8, 7.5, 7.7, 6.3, 32.0, 27.7, 28.3, 18.3, 7.8, 7.9, 37.0, 26.5, 35.3, 26.4, 21.6, 7.8, 6.7, 11.3, 32.0, 31.6, 29.7, 40.0, 20.0, 26.4, 38.0, 7.7, 32.0, 22.6, 14.3, 8.3, 10.0, 33.0, 8.4, 21.4, 8.0, 39.0, 18.5, 36.7, 16.9, 8.0, 32.2, 8.5, 23.1, 27.7, 14.7, 36.0, 23.8, 25.9, 5.57, 18.1, 33.0, 32.2, 17.2, 35.0, 35.1, 7.31, 8.3, 6.8, 31.0, 29.0, 27.2, 28.5, 28.2, 23.8, 28.0, 101.0, 33.0, 7.4, 29.0, 10.8, 8.2, 7.4, 29.0, 26.4, 12.6, 17.4, 8.6, 42.0, 42.0, 59.0, 20.8, 7.4, 7.3, 14.7, 25.6, 21.2, 50.0, 35.0, 41.0, 24.4, 29.0, 16.6, 27.1, 23.2, 51.0, 29.2, 23.8, 21.4, 37.0, 21.6, 7.1, 30.0, 27.2, 36.0, 34.0, 35.0, 28.2, 42.0, 22.3, 35.0, 22.6, 29.0, 7.9, 7.6, 27.9, 10.6, 12.5, 30.0, 40.0, 22.7, 36.3, 11.5, 50.0, 20.0, 18.0, 6.6, 33.0, 27.0, 5.74, 16.1, 25.2, 31.0, 25.7, 11.0, 44.0, 1.42, 1.45, 11.3, 7.8, 27.7, 24.0, 14.8, 20.0, 14.0, 32.7, 27.9, 61.0, 27.9, 30.0, 2.83, 27.1, 12.3, 27.4, 7.3, 29.0, 32.6, 1.44, 28.3, 37.0, 34.7, 1.17, 7.7, 18.1, 8.4, 19.2, 6.7, 24.0, 8.3, 5.9, 47.0, 7.7, 7.9, 6.9, 26.8, 20.4, 15.5, 5.1, 2.1, 23.3, 24.5, 34.2, 10.4, 25.8, 2.6, 30.6, 27.6, 29.0, 8.0, 30.2, 6.3, 7.5, 19.9, 11.6, 7.9, 39.4, 40.5, 24.0, 35.0, 44.8, 22.2, 57.2, 40.8, 24.0, 28.4, 18.3, 12.5, 28.3, 76.0, 1.3, 32.0, 30.4, 24.2, 9.0, 18.5, 20.0, 29.0, 27.6, 1.27, 24.9, 24.2, 30.2, 7.8, 20.8, 7.5, 13.6, 30.0]
 # ─── Colours ──────────────────────────────────────────────────────────────────
 BH_COLOR   = "#008FBF"   # teal / cyan — black holes
 NS_COLOR   = "#FF8C00"   # orange — neutron stars
@@ -62,7 +45,7 @@ def half_circle_markers():
 
 def generate_bbh_params(num_bbh=300):
     """LVK BBH events merged with a KDE-sampled third-generation BBH population."""
-    third_gen_mass1 = gaussian_kde(LVK_BLACKHOLE_MASS1).resample(num_bbh, seed=2026)[0]
+    third_gen_mass1 = gaussian_kde(LVK_MASS1).resample(num_bbh, seed=2026)[0]
     q = np.random.uniform(1, 12, num_bbh)
     third_gen_mass2 = third_gen_mass1 / q
 
@@ -70,8 +53,8 @@ def generate_bbh_params(num_bbh=300):
     third_gen_mass1 = third_gen_mass1[_filter]
     third_gen_mass2 = third_gen_mass2[_filter]
 
-    mass1 = np.concatenate([LVK_BLACKHOLE_MASS1, third_gen_mass1])
-    mass2 = np.concatenate([LVK_BLACKHOLE_MASS2, third_gen_mass2])
+    mass1 = np.concatenate([LVK_MASS1, third_gen_mass1])
+    mass2 = np.concatenate([LVK_MASS2, third_gen_mass2])
     mfinal = 0.95 * (mass1 + mass2)
     return mass1, mass2, mfinal
 
@@ -105,7 +88,7 @@ def arch_order(mass1, mass2):
     n = len(total_mass)
     sorted_idx = np.argsort(total_mass)          # ascending: lightest first
 
-    n_half   = n // 2
+    n_half   = int(n*0.7) 
     low_idx  = sorted_idx[:n_half]               # lightest half -> scatter
     high_idx = sorted_idx[n_half:]                # heaviest half -> arch
 
@@ -250,11 +233,11 @@ def main():
     # ─── Title & legend ─────────────────────────────────────────────────────
     ax.set_title("Masses in the Stellar Graveyard",
                  color="white", fontsize=35, y=0.92)
-    ax.text(0.55, 0.875, "Black Holes", transform=ax.transAxes,
+    ax.text(0.55, 0.9, "Black Holes", transform=ax.transAxes,
             color=BH_COLOR, fontsize=14, ha="center", va="center")
-    ax.text(0.35, 0.875, "One day of observations in 3G", fontsize=14, color="white",
+    ax.text(0.35, 0.9, "One day of observations in 3G", fontsize=14, color="white",
             transform=ax.transAxes, ha="center", va="center")
-    ax.text(0.68, 0.875, "  Neutron Stars", transform=ax.transAxes,
+    ax.text(0.68, 0.9, "  Neutron Stars", transform=ax.transAxes,
             color=NS_COLOR, fontsize=14, ha="center", va="center")
     ax.text(0.99, 4e-3, "Inspired by ``LIGO-Virgo-KAGRA masses in the stellar graveyard''",
             transform=ax.transAxes, color="white", fontsize=7, va="center", ha="right", alpha=0.6)
