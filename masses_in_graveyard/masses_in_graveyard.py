@@ -235,9 +235,9 @@ def main():
                  color="white", fontsize=35, y=0.92)
     ax.text(0.55, 0.9, "Black Holes", transform=ax.transAxes,
             color=BH_COLOR, fontsize=14, ha="center", va="center")
-    ax.text(0.35, 0.9, "One day of observations in 3G", fontsize=14, color="white",
+    ax.text(0.4, 0.9, "One day of observations in 3G", fontsize=14, color="white",
             transform=ax.transAxes, ha="center", va="center")
-    ax.text(0.68, 0.9, "  Neutron Stars", transform=ax.transAxes,
+    ax.text(0.66, 0.9, "  Neutron Stars", transform=ax.transAxes,
             color=NS_COLOR, fontsize=14, ha="center", va="center")
     ax.text(0.99, 4e-3, "Inspired by ``LIGO-Virgo-KAGRA masses in the stellar graveyard''",
             transform=ax.transAxes, color="white", fontsize=7, va="center", ha="right", alpha=0.6)
