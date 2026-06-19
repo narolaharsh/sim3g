@@ -117,7 +117,7 @@ def main():
 
     # ─── Plot ─────────────────────────────────────────────────────────────────
     plt.style.use("dark_background")
-    fig, ax = plt.subplots(figsize=(12, 10))
+    fig, ax = plt.subplots(figsize=(16, 9))
     fig.patch.set_facecolor(BG_COLOR)
     ax.set_facecolor(BG_COLOR)
 
